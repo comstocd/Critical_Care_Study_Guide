@@ -114,9 +114,33 @@
             padding: 20px;
             position: sticky;
             top: 0;
+            z-index: 10;
+        }
+
+        .toc-header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .toc-search {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-color);
+        }
+
+        .toc-search::placeholder {
+            color: #999;
+        }
+
+        .toc-search:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
         }
 
         .toc-close {
@@ -132,18 +156,109 @@
             padding: 20px;
         }
 
-        .toc a {
-            display: block;
+        .quick-ref {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: -20px -20px 20px -20px;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        .quick-ref h3 {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            color: white;
+            opacity: 0.9;
+            font-weight: 600;
+            border: none;
+            padding: 0;
+        }
+
+        .quick-ref-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .quick-ref-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .quick-ref-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0.98);
+        }
+
+        .toc-item {
+            margin-bottom: 5px;
+        }
+
+        .toc-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 12px 15px;
             color: var(--text-color);
             text-decoration: none;
             border-left: 3px solid transparent;
             transition: all 0.2s ease;
             font-size: 0.95em;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
         }
 
-        .toc a:hover, .toc a:active {
+        .toc-main:hover, .toc-main:active {
             background: var(--bg-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .toc-main.active {
+            background: var(--bg-color);
+            border-left-color: var(--secondary-color);
+        }
+
+        .toc-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+            color: var(--secondary-color);
+        }
+
+        .toc-main.active .toc-arrow {
+            transform: rotate(180deg);
+        }
+
+        .toc-submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .toc-submenu.active {
+            max-height: 1000px;
+        }
+
+        .toc-submenu a {
+            display: block;
+            padding: 8px 15px 8px 30px;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.85em;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .toc-submenu a:hover, .toc-submenu a:active {
+            background: #e9ecef;
+            color: var(--secondary-color);
             border-left-color: var(--secondary-color);
         }
 
@@ -366,22 +481,184 @@
     
     <nav class="toc">
         <div class="toc-header">
-            <h2>Contents</h2>
-            <button class="toc-close" onclick="toggleToc()">✕</button>
+            <div class="toc-header-content">
+                <h2>Contents</h2>
+                <button class="toc-close" onclick="toggleToc()">✕</button>
+            </div>
+            <input type="text" class="toc-search" placeholder="🔍 Search topics..." oninput="searchTOC(this.value)">
         </div>
         <div class="toc-content">
-            <a href="#resp" onclick="toggleToc(); toggleSection('resp')">Respiratory Failure & Mechanical Ventilation</a>
-            <a href="#shock" onclick="toggleToc(); toggleSection('shock')">Shock & Hemodynamics</a>
-            <a href="#sepsis" onclick="toggleToc(); toggleSection('sepsis')">Sepsis & Septic Shock</a>
-            <a href="#neuro" onclick="toggleToc(); toggleSection('neuro')">Neurological Critical Care</a>
-            <a href="#renal" onclick="toggleToc(); toggleSection('renal')">Renal & Acid-Base</a>
-            <a href="#sedation" onclick="toggleToc(); toggleSection('sedation')">Sedation, Analgesia & Delirium</a>
-            <a href="#procedures" onclick="toggleToc(); toggleSection('procedures')">Critical Care Procedures</a>
-            <a href="#emergencies" onclick="toggleToc(); toggleSection('emergencies')">ICU Emergencies</a>
-            <a href="#preventive" onclick="toggleToc(); toggleSection('preventive')">Preventive Care & Complications</a>
-            <a href="#trials" onclick="toggleToc(); toggleSection('trials')">Landmark Trials & Key Papers</a>
-            <a href="#daily" onclick="toggleToc(); toggleSection('daily')">Daily ICU Routine & Practical Tips</a>
-            <a href="#study" onclick="toggleToc(); toggleSection('study')">Study Plan Recommendations</a>
+            <div class="quick-ref">
+                <h3>⚡ QUICK REFERENCE</h3>
+                <div class="quick-ref-grid">
+                    <div class="quick-ref-btn" onclick="navigateTo('resp', this)">Vent Settings</div>
+                    <div class="quick-ref-btn" onclick="navigateTo('shock', this)">Pressors</div>
+                    <div class="quick-ref-btn" onclick="navigateTo('sepsis', this)">Sepsis Bundle</div>
+                    <div class="quick-ref-btn" onclick="navigateTo('renal', this)">Acid-Base</div>
+                    <div class="quick-ref-btn" onclick="navigateTo('procedures', this)">RSI Drugs</div>
+                    <div class="quick-ref-btn" onclick="navigateTo('daily', this)">Daily Rounds</div>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Respiratory Failure & Mechanical Ventilation</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#resp-types" onclick="navigateTo('resp', this)">Types of Respiratory Failure</a>
+                    <a href="#resp-vent" onclick="navigateTo('resp', this)">Mechanical Ventilation Basics</a>
+                    <a href="#resp-ards" onclick="navigateTo('resp', this)">ARDS Management</a>
+                    <a href="#resp-liberation" onclick="navigateTo('resp', this)">Ventilator Liberation</a>
+                    <a href="#resp-niv" onclick="navigateTo('resp', this)">Non-Invasive Ventilation</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Shock & Hemodynamics</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#shock-types" onclick="navigateTo('shock', this)">Four Types of Shock</a>
+                    <a href="#shock-monitoring" onclick="navigateTo('shock', this)">Hemodynamic Monitoring</a>
+                    <a href="#shock-fluids" onclick="navigateTo('shock', this)">Fluid Resuscitation</a>
+                    <a href="#shock-pressors" onclick="navigateTo('shock', this)">Vasopressors & Inotropes</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Sepsis & Septic Shock</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#sepsis-defs" onclick="navigateTo('sepsis', this)">Definitions (Sepsis-3)</a>
+                    <a href="#sepsis-ssc" onclick="navigateTo('sepsis', this)">Surviving Sepsis Guidelines</a>
+                    <a href="#sepsis-resus" onclick="navigateTo('sepsis', this)">Initial Resuscitation</a>
+                    <a href="#sepsis-abx" onclick="navigateTo('sepsis', this)">Antibiotic Management</a>
+                    <a href="#sepsis-steroids" onclick="navigateTo('sepsis', this)">Corticosteroids</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Neurological Critical Care</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#neuro-ams" onclick="navigateTo('neuro', this)">Altered Mental Status</a>
+                    <a href="#neuro-delirium" onclick="navigateTo('neuro', this)">Delirium</a>
+                    <a href="#neuro-arrest" onclick="navigateTo('neuro', this)">Post-Cardiac Arrest Care</a>
+                    <a href="#neuro-icp" onclick="navigateTo('neuro', this)">Elevated ICP</a>
+                    <a href="#neuro-seizure" onclick="navigateTo('neuro', this)">Status Epilepticus</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Renal & Acid-Base</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#renal-aki" onclick="navigateTo('renal', this)">Acute Kidney Injury</a>
+                    <a href="#renal-rrt" onclick="navigateTo('renal', this)">Renal Replacement Therapy</a>
+                    <a href="#renal-acidbase" onclick="navigateTo('renal', this)">Acid-Base Disorders</a>
+                    <a href="#renal-lytes" onclick="navigateTo('renal', this)">Electrolyte Emergencies</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Sedation, Analgesia & Delirium</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#sedation-bundle" onclick="navigateTo('sedation', this)">ABCDEF Bundle</a>
+                    <a href="#sedation-pain" onclick="navigateTo('sedation', this)">Pain Assessment</a>
+                    <a href="#sedation-agents" onclick="navigateTo('sedation', this)">Sedation Agents & RASS</a>
+                    <a href="#sedation-delirium" onclick="navigateTo('sedation', this)">Delirium Management</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Critical Care Procedures</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#proc-cvc" onclick="navigateTo('procedures', this)">Central Venous Catheter</a>
+                    <a href="#proc-art" onclick="navigateTo('procedures', this)">Arterial Line</a>
+                    <a href="#proc-intubation" onclick="navigateTo('procedures', this)">Endotracheal Intubation</a>
+                    <a href="#proc-chest" onclick="navigateTo('procedures', this)">Chest Tube</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>ICU Emergencies</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#emerg-ptx" onclick="navigateTo('emergencies', this)">Tension Pneumothorax</a>
+                    <a href="#emerg-hemopt" onclick="navigateTo('emergencies', this)">Massive Hemoptysis</a>
+                    <a href="#emerg-gib" onclick="navigateTo('emergencies', this)">Upper GI Bleeding</a>
+                    <a href="#emerg-anaph" onclick="navigateTo('emergencies', this)">Anaphylaxis</a>
+                    <a href="#emerg-acls" onclick="navigateTo('emergencies', this)">Cardiac Arrest (ACLS)</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Preventive Care & Complications</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#prev-vte" onclick="navigateTo('preventive', this)">VTE Prophylaxis</a>
+                    <a href="#prev-sup" onclick="navigateTo('preventive', this)">Stress Ulcer Prophylaxis</a>
+                    <a href="#prev-clabsi" onclick="navigateTo('preventive', this)">CLABSI/CAUTI Prevention</a>
+                    <a href="#prev-vap" onclick="navigateTo('preventive', this)">VAP Prevention</a>
+                    <a href="#prev-weak" onclick="navigateTo('preventive', this)">ICU-Acquired Weakness</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Landmark Trials & Key Papers</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#trials-resp" onclick="navigateTo('trials', this)">Respiratory/ARDS Trials</a>
+                    <a href="#trials-sepsis" onclick="navigateTo('trials', this)">Sepsis Trials</a>
+                    <a href="#trials-sedation" onclick="navigateTo('trials', this)">Sedation Trials</a>
+                    <a href="#trials-other" onclick="navigateTo('trials', this)">Transfusion, Arrest, Renal</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Daily ICU Routine & Practical Tips</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#daily-rounds" onclick="navigateTo('daily', this)">Daily Rounds Structure</a>
+                    <a href="#daily-vent" onclick="navigateTo('daily', this)">Ventilator Troubleshooting</a>
+                    <a href="#daily-drips" onclick="navigateTo('daily', this)">Common ICU Drips</a>
+                    <a href="#daily-goals" onclick="navigateTo('daily', this)">Goals of Care Discussions</a>
+                </div>
+            </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="toggleSubmenu(this)">
+                    <span>Study Plan Recommendations</span>
+                    <span class="toc-arrow">▼</span>
+                </div>
+                <div class="toc-submenu">
+                    <a href="#study-plan" onclick="navigateTo('study', this)">Week-by-Week Preparation</a>
+                    <a href="#study-resources" onclick="navigateTo('study', this)">Key Resources</a>
+                    <a href="#study-tips" onclick="navigateTo('study', this)">Final Tips for Success</a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -2166,6 +2443,90 @@
             const overlay = document.querySelector('.toc-overlay');
             toc.classList.toggle('active');
             overlay.classList.toggle('active');
+        }
+
+        // Search TOC
+        function searchTOC(query) {
+            const items = document.querySelectorAll('.toc-item');
+            const searchLower = query.toLowerCase();
+            
+            items.forEach(item => {
+                const mainText = item.querySelector('.toc-main span').textContent.toLowerCase();
+                const submenuLinks = item.querySelectorAll('.toc-submenu a');
+                let hasMatch = false;
+                
+                // Check main heading
+                if (mainText.includes(searchLower)) {
+                    hasMatch = true;
+                }
+                
+                // Check submenu items
+                submenuLinks.forEach(link => {
+                    const linkText = link.textContent.toLowerCase();
+                    if (linkText.includes(searchLower)) {
+                        hasMatch = true;
+                        link.style.display = 'block';
+                    } else if (query) {
+                        link.style.display = 'none';
+                    } else {
+                        link.style.display = 'block';
+                    }
+                });
+                
+                // Show/hide main item
+                if (hasMatch || !query) {
+                    item.style.display = 'block';
+                    // Expand if searching and has match
+                    if (query && hasMatch) {
+                        const main = item.querySelector('.toc-main');
+                        const submenu = item.querySelector('.toc-submenu');
+                        main.classList.add('active');
+                        submenu.classList.add('active');
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle submenu in TOC
+        function toggleSubmenu(element) {
+            const submenu = element.nextElementSibling;
+            const wasActive = element.classList.contains('active');
+            
+            // Close all other submenus
+            document.querySelectorAll('.toc-main').forEach(main => {
+                main.classList.remove('active');
+                main.nextElementSibling.classList.remove('active');
+            });
+            
+            // Toggle current submenu
+            if (!wasActive) {
+                element.classList.add('active');
+                submenu.classList.add('active');
+            }
+        }
+
+        // Navigate to section and subsection
+        function navigateTo(sectionId, linkElement) {
+            // Open the section if not already open
+            const section = document.getElementById(sectionId);
+            const content = section.querySelector('.section-content');
+            const header = section.querySelector('.section-header');
+            
+            if (!content.classList.contains('active')) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+            
+            // Scroll to section
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Close TOC
+            toggleToc();
+            
+            // Prevent default link behavior
+            event.preventDefault();
         }
 
         // Toggle section
