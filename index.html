@@ -3079,21 +3079,17 @@ body {
         // Navigate to section and subsection
 function navigateTo(sectionId, linkElement) {
     const section = document.getElementById(sectionId);
-    if (!section) {
-        console.error('Section not found:', sectionId);
-        return false;
-    }
+    if (!section) return false;
     
-    // Open the section if not already open
+    // Open section if collapsed
     const content = section.querySelector('.section-content');
     const header = section.querySelector('.section-header');
-    
     if (content && header && !content.classList.contains('active')) {
         header.classList.add('active');
         content.classList.add('active');
     }
     
-    // Close TOC first
+    // Close TOC
     const toc = document.querySelector('.toc');
     const overlay = document.querySelector('.toc-overlay');
     if (toc && toc.classList.contains('active')) {
@@ -3101,16 +3097,9 @@ function navigateTo(sectionId, linkElement) {
         overlay.classList.remove('active');
     }
     
-    // Calculate scroll position with header offset
+    // Simple scroll - body padding handles the offset
     setTimeout(() => {
-        const headerHeight = 180;
-        const elementPosition = section.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-        
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-        });
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
     
     return false;
