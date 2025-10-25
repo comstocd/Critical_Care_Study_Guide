@@ -29,6 +29,10 @@ html {
     scroll-padding-top: var(--header-height);
 }
 
+h3[id], h4[id] {
+    scroll-margin-top: var(--header-height);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
@@ -674,11 +678,11 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('resp', this); return false;">→ Go to Section</a>
-                    <a href="#resp-types">Types of Respiratory Failure</a>
-                    <a href="#resp-vent">Mechanical Ventilation Basics</a>
-                    <a href="#resp-ards">ARDS Management</a>
-                    <a href="#resp-liberation">Ventilator Liberation</a>
-                    <a href="#resp-niv">Non-Invasive Ventilation</a>
+                    <a href="#resp-types" onclick="navigateToSubsection('resp-types'); return false;">Types of Respiratory Failure</a>
+                    <a href="#resp-vent" onclick="navigateToSubsection('resp-vent'); return false;">Mechanical Ventilation Basics</a>
+                    <a href="#resp-ards" onclick="navigateToSubsection('resp-ards'); return false;">ARDS Management</a>
+                    <a href="#resp-liberation" onclick="navigateToSubsection('resp-liberation'); return false;">Ventilator Liberation</a>
+                    <a href="#resp-niv" onclick="navigateToSubsection('resp-niv'); return false;">Non-Invasive Ventilation</a>
                 </div>
             </div>
 
@@ -689,10 +693,10 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('shock', this); return false;">→ Go to Section</a>
-                    <a href="#shock-types">Four Types of Shock</a>
-                    <a href="#shock-monitoring">Hemodynamic Monitoring</a>
-                    <a href="#shock-fluids">Fluid Resuscitation</a>
-                    <a href="#shock-pressors">Vasopressors & Inotropes</a>
+                    <a href="#shock-types" onclick="navigateToSubsection('shock-types'); return false;">Four Types of Shock</a>
+                    <a href="#shock-monitoring" onclick="navigateToSubsection('shock-monitoring'); return false;">Hemodynamic Monitoring</a>
+                    <a href="#shock-fluids" onclick="navigateToSubsection('shock-fluids'); return false;">Fluid Resuscitation</a>
+                    <a href="#shock-pressors" onclick="navigateToSubsection('shock-pressors'); return false;">Vasopressors & Inotropes</a>
                 </div>
             </div>
 
@@ -703,11 +707,11 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('sepsis', this); return false;">→ Go to Section</a>
-                    <a href="#sepsis-defs">Definitions (Sepsis-3)</a>
-                    <a href="#sepsis-ssc">Surviving Sepsis Guidelines</a>
-                    <a href="#sepsis-resus">Initial Resuscitation</a>
-                    <a href="#sepsis-abx">Antibiotic Management</a>
-                    <a href="#sepsis-steroids">Corticosteroids</a>
+                    <a href="#sepsis-defs" onclick="navigateToSubsection('sepsis-defs'); return false;">Definitions (Sepsis-3)</a>
+                    <a href="#sepsis-ssc" onclick="navigateToSubsection('sepsis-ssc'); return false;">Surviving Sepsis Guidelines</a>
+                    <a href="#sepsis-resus" onclick="navigateToSubsection('sepsis-resus'); return false;">Initial Resuscitation</a>
+                    <a href="#sepsis-abx" onclick="navigateToSubsection('sepsis-abx'); return false;">Antibiotic Management</a>
+                    <a href="#sepsis-steroids" onclick="navigateToSubsection('sepsis-steroids'); return false;">Corticosteroids</a>
                 </div>
             </div>
 
@@ -718,11 +722,11 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('neuro', this); return false;">→ Go to Section</a>
-                    <a href="#neuro-ams">Altered Mental Status</a>
-                    <a href="#neuro-delirium">Delirium</a>
-                    <a href="#neuro-arrest">Post-Cardiac Arrest Care</a>
-                    <a href="#neuro-icp">Elevated ICP</a>
-                    <a href="#neuro-seizure">Status Epilepticus</a>
+                    <a href="#neuro-ams" onclick="navigateToSubsection('neuro-ams'); return false;">Altered Mental Status</a>
+                    <a href="#neuro-delirium" onclick="navigateToSubsection('neuro-delirium'); return false;">Delirium</a>
+                    <a href="#neuro-arrest" onclick="navigateToSubsection('neuro-arrest'); return false;">Post-Cardiac Arrest Care</a>
+                    <a href="#neuro-icp" onclick="navigateToSubsection('neuro-icp'); return false;">Elevated ICP</a>
+                    <a href="#neuro-seizure" onclick="navigateToSubsection('neuro-seizure'); return false;">Status Epilepticus</a>
                 </div>
             </div>
 
@@ -733,10 +737,10 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('renal', this); return false;">→ Go to Section</a>
-                    <a href="#renal-aki">Acute Kidney Injury</a>
-                    <a href="#renal-rrt">Renal Replacement Therapy</a>
-                    <a href="#renal-acidbase">Acid-Base Disorders</a>
-                    <a href="#renal-lytes">Electrolyte Emergencies</a>
+                    <a href="#renal-aki" onclick="navigateToSubsection('renal-aki'); return false;">Acute Kidney Injury</a>
+                    <a href="#renal-rrt" onclick="navigateToSubsection('renal-rrt'); return false;">Renal Replacement Therapy</a>
+                    <a href="#renal-acidbase" onclick="navigateToSubsection('renal-acidbase'); return false;">Acid-Base Disorders</a>
+                    <a href="#renal-lytes" onclick="navigateToSubsection('renal-lytes'); return false;">Electrolyte Emergencies</a>
                 </div>
             </div>
 
@@ -747,10 +751,10 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('sedation', this); return false;">→ Go to Section</a>
-                    <a href="#sedation-bundle">ABCDEF Bundle</a>
-                    <a href="#sedation-pain">Pain Assessment</a>
-                    <a href="#sedation-agents">Sedation Agents & RASS</a>
-                    <a href="#sedation-delirium">Delirium Management</a>
+                    <a href="#sedation-bundle" onclick="navigateToSubsection('sedation-bundle'); return false;">ABCDEF Bundle</a>
+                    <a href="#sedation-pain" onclick="navigateToSubsection('sedation-pain'); return false;">Pain Assessment</a>
+                    <a href="#sedation-agents" onclick="navigateToSubsection('sedation-agents'); return false;">Sedation Agents & RASS</a>
+                    <a href="#sedation-delirium" onclick="navigateToSubsection('sedation-delirium'); return false;">Delirium Management</a>
                 </div>
             </div>
 
@@ -761,10 +765,10 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('procedures', this); return false;">→ Go to Section</a>
-                    <a href="#proc-cvc">Central Venous Catheter</a>
-                    <a href="#proc-art">Arterial Line</a>
-                    <a href="#proc-intubation">Endotracheal Intubation</a>
-                    <a href="#proc-chest">Chest Tube</a>
+                    <a href="#proc-cvc" onclick="navigateToSubsection('proc-cvc'); return false;">Central Venous Catheter</a>
+                    <a href="#proc-art" onclick="navigateToSubsection('proc-art'); return false;">Arterial Line</a>
+                    <a href="#proc-intubation" onclick="navigateToSubsection('proc-intubation'); return false;">Endotracheal Intubation</a>
+                    <a href="#proc-chest" onclick="navigateToSubsection('proc-chest'); return false;">Chest Tube</a>
                 </div>
             </div>
 
@@ -775,11 +779,11 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('emergencies', this); return false;">→ Go to Section</a>
-                    <a href="#emerg-ptx">Tension Pneumothorax</a>
-                    <a href="#emerg-hemopt">Massive Hemoptysis</a>
-                    <a href="#emerg-gib">Upper GI Bleeding</a>
-                    <a href="#emerg-anaph">Anaphylaxis</a>
-                    <a href="#emerg-acls">Cardiac Arrest (ACLS)</a>
+                    <a href="#emerg-ptx" onclick="navigateToSubsection('emerg-ptx'); return false;">Tension Pneumothorax</a>
+                    <a href="#emerg-hemopt" onclick="navigateToSubsection('emerg-hemopt'); return false;">Massive Hemoptysis</a>
+                    <a href="#emerg-gib" onclick="navigateToSubsection('emerg-gib'); return false;">Upper GI Bleeding</a>
+                    <a href="#emerg-anaph" onclick="navigateToSubsection('emerg-anaph'); return false;">Anaphylaxis</a>
+                    <a href="#emerg-acls" onclick="navigateToSubsection('emerg-acls'); return false;">Cardiac Arrest (ACLS)</a>
                 </div>
             </div>
 
@@ -790,11 +794,11 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('preventive', this); return false;">→ Go to Section</a>
-                    <a href="#prev-vte">VTE Prophylaxis</a>
-                    <a href="#prev-sup">Stress Ulcer Prophylaxis</a>
-                    <a href="#prev-clabsi">CLABSI/CAUTI Prevention</a>
-                    <a href="#prev-vap">VAP Prevention</a>
-                    <a href="#prev-weak">ICU-Acquired Weakness</a>
+                    <a href="#prev-vte" onclick="navigateToSubsection('prev-vte'); return false;">VTE Prophylaxis</a>
+                    <a href="#prev-sup" onclick="navigateToSubsection('prev-sup'); return false;">Stress Ulcer Prophylaxis</a>
+                    <a href="#prev-clabsi" onclick="navigateToSubsection('prev-clabsi'); return false;">CLABSI/CAUTI Prevention</a>
+                    <a href="#prev-vap" onclick="navigateToSubsection('prev-vap'); return false;">VAP Prevention</a>
+                    <a href="#prev-weak" onclick="navigateToSubsection('prev-weak'); return false;">ICU-Acquired Weakness</a>
                 </div>
             </div>
 
@@ -805,10 +809,10 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('trials', this); return false;">→ Go to Section</a>
-                    <a href="#trials-resp">Respiratory/ARDS Trials</a>
-                    <a href="#trials-sepsis">Sepsis Trials</a>
-                    <a href="#trials-sedation">Sedation Trials</a>
-                    <a href="#trials-other">Transfusion, Arrest, Renal</a>
+                    <a href="#trials-resp" onclick="navigateToSubsection('trials-resp'); return false;">Respiratory/ARDS Trials</a>
+                    <a href="#trials-sepsis" onclick="navigateToSubsection('trials-sepsis'); return false;">Sepsis Trials</a>
+                    <a href="#trials-sedation" onclick="navigateToSubsection('trials-sedation'); return false;">Sedation Trials</a>
+                    <a href="#trials-other" onclick="navigateToSubsection('trials-other'); return false;">Transfusion, Arrest, Renal</a>
                 </div>
             </div>
 
@@ -819,10 +823,10 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('daily', this); return false;">→ Go to Section</a>
-                    <a href="#daily-rounds">Daily Rounds Structure</a>
-                    <a href="#daily-vent">Ventilator Troubleshooting</a>
-                    <a href="#daily-drips">Common ICU Drips</a>
-                    <a href="#daily-goals">Goals of Care Discussions</a>
+                    <a href="#daily-rounds" onclick="navigateToSubsection('daily-rounds'); return false;">Daily Rounds Structure</a>
+                    <a href="#daily-vent" onclick="navigateToSubsection('daily-vent'); return false;">Ventilator Troubleshooting</a>
+                    <a href="#daily-drips" onclick="navigateToSubsection('daily-drips'); return false;">Common ICU Drips</a>
+                    <a href="#daily-goals" onclick="navigateToSubsection('daily-goals'); return false;">Goals of Care Discussions</a>
                 </div>
             </div>
 
@@ -833,9 +837,9 @@ body {
                 </div>
                 <div class="toc-submenu">
                     <a href="#" onclick="navigateTo('study', this); return false;">→ Go to Section</a>
-                    <a href="#study-plan">Week-by-Week Preparation</a>
-                    <a href="#study-resources">Key Resources</a>
-                    <a href="#study-tips">Final Tips for Success</a>
+                    <a href="#study-plan" onclick="navigateToSubsection('study-plan'); return false;">Week-by-Week Preparation</a>
+                    <a href="#study-resources" onclick="navigateToSubsection('study-resources'); return false;">Key Resources</a>
+                    <a href="#study-tips" onclick="navigateToSubsection('study-tips'); return false;">Final Tips for Success</a>
                 </div>
             </div>
 
@@ -948,33 +952,33 @@ body {
                     <div class="success-box">
                         <h4>Evidence-Based ARDS Management</h4>
                         <ol>
-                            <li><strong>Lung-protective ventilation</strong> <span class="trial-name">ARMA</span>
+                            <li><strong>Lung-protective ventilation</strong> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/10793162/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ARMA</a></span>
                                 <ul>
                                     <li>Tidal volume: 6 mL/kg <span class="gterm" onclick="showGlossary('IBW')">IBW</span></li>
                                     <li><span class="gterm" onclick="showGlossary('Pplat')">Plateau pressure</span>: &lt;30 cm H2O</li>
                                 </ul>
                             </li>
-                            <li><strong>Higher PEEP</strong> <span class="trial-name">ALVEOLI</span> <span class="trial-name">LOVS</span>
+                            <li><strong>Higher PEEP</strong> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/15269312/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ALVEOLI</a></span> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/18424510/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">LOVS</a></span>
                                 <ul>
                                     <li>Use PEEP/FiO2 tables</li>
                                     <li>Consider recruitment maneuvers</li>
                                 </ul>
                             </li>
-                            <li><strong>Prone positioning</strong> <span class="trial-name">PROSEVA</span>
+                            <li><strong>Prone positioning</strong> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/23688302/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">PROSEVA</a></span>
                                 <ul>
                                     <li>For PaO2/FiO2 &lt;150</li>
                                     <li>16+ hours per day</li>
                                     <li>50% mortality reduction</li>
                                 </ul>
                             </li>
-                            <li><strong>Neuromuscular blockade</strong> <span class="trial-name">ACURASYS</span>
+                            <li><strong>Neuromuscular blockade</strong> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/20843245/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ACURASYS</a></span>
                                 <ul>
                                     <li>For PaO2/FiO2 &lt;150 in first 48 hours</li>
                                     <li>Cisatracurium infusion for 48 hours</li>
                                     <li>Re-evaluated by ROSE trial (less clear benefit with lighter sedation)</li>
                                 </ul>
                             </li>
-                            <li><strong>Conservative fluid strategy</strong> <span class="trial-name">FACTT</span>
+                            <li><strong>Conservative fluid strategy</strong> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/16714767/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">FACTT</a></span>
                                 <ul>
                                     <li>After initial resuscitation</li>
                                     <li>Target CVP &lt;4 or negative fluid balance</li>
@@ -1053,7 +1057,7 @@ body {
                         <li>Generates low-level PEEP (3-5 cm H2O)</li>
                         <li>Washes out dead space</li>
                     </ul>
-                    <p><span class="trial-name">FLORALI</span> trial: Reduced intubation in hypoxemic respiratory failure vs. standard O2</p>
+                    <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/25981908/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">FLORALI</a></span> trial: Reduced intubation in hypoxemic respiratory failure vs. standard O2</p>
                 </div>
             </div>
         </section>
@@ -1136,15 +1140,15 @@ body {
                             <li><strong>Lactated Ringer's (LR):</strong> Balanced, contains potassium</li>
                             <li><strong>Plasmalyte:</strong> Balanced alternative</li>
                         </ul>
-                        <p><span class="trial-name">SMART</span> <span class="trial-name">SALT-ED</span> trials: Balanced crystalloids reduced mortality/AKI vs. saline</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29485925/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SMART</a></span> <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29485926/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SALT-ED</a></span> trials: Balanced crystalloids reduced mortality/AKI vs. saline</p>
                         <p><strong>Recommendation:</strong> Use balanced crystalloids as first-line</p>
                     </div>
 
                     <h4>Colloids</h4>
                     <ul>
                         <li><strong>Albumin:</strong> Consider in cirrhosis with SBP, hepatorenal syndrome</li>
-                        <li><span class="trial-name">SAFE</span> trial: No difference vs. saline except harm in TBI</li>
-                        <li><span class="trial-name">ALBIOS</span> trial: No benefit in septic shock</li>
+                        <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/15163774/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SAFE</a></span> trial: No difference vs. saline except harm in TBI</li>
+                        <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/24635773/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ALBIOS</a></span> trial: No benefit in septic shock</li>
                         <li><strong>Starches/gelatins:</strong> Associated with AKI, avoid</li>
                     </ul>
 
@@ -1163,7 +1167,7 @@ body {
                     <ul>
                         <li>V1 receptor agonist → vasoconstriction</li>
                         <li>Dose: 0.03-0.04 units/min (fixed dose)</li>
-                        <li><span class="trial-name">VASST</span> trial: Add to norepinephrine in septic shock</li>
+                        <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/18184957/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">VASST</a></span> trial: Add to norepinephrine in septic shock</li>
                         <li>May reduce norepi requirements, no mortality benefit</li>
                     </ul>
 
@@ -1196,7 +1200,7 @@ body {
                     <div class="info-box">
                         <h4>MAP Goals</h4>
                         <p><strong>Standard Target:</strong> MAP ≥65 mmHg</p>
-                        <p><span class="trial-name">SEPSISPAM</span> trial: No benefit to MAP 80-85 vs. 65-70 mmHg</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/24635772/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SEPSISPAM</a></span> trial: No benefit to MAP 80-85 vs. 65-70 mmHg</p>
                         <p><strong>Exception:</strong> Chronic hypertension → may need higher MAP (75-85)</p>
                         <p>Individualize based on end-organ perfusion (UOP, mentation, lactate clearance)</p>
                     </div>
@@ -1249,7 +1253,7 @@ body {
                     <h4 id="shock-fluids">Fluid Resuscitation</h4>
                     <ul>
                         <li><strong>30 mL/kg crystalloid</strong> within 3 hours for hypotension or lactate ≥4</li>
-                        <li>Use balanced crystalloids (<span class="trial-name">SMART</span>/<span class="trial-name">SALT-ED</span> trials)</li>
+                        <li>Use balanced crystalloids (<span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29485925/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SMART</a></span>/<span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29485926/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SALT-ED</a></span> trials)</li>
                         <li>Reassess after each bolus</li>
                     </ul>
 
@@ -1320,7 +1324,7 @@ body {
                     <h3>Corticosteroids</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">ADRENAL</span> & <span class="trial-name">APROCCHSS</span> Trials (2018):</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29347871/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ADRENAL</a></span> & <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29490095/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">APROCCHSS</a></span> Trials (2018):</p>
                         <ul>
                             <li>Hydrocortisone did NOT reduce 90-day mortality</li>
                             <li>May reduce time on vasopressors</li>
@@ -1429,8 +1433,8 @@ body {
                         <h4>Targeted Temperature Management (<span class="gterm" onclick="showGlossary('TTM')">TTM</span>)</h4>
                         <ul>
                             <li><strong>Target:</strong> 32-36°C for at least 24 hours</li>
-                            <li><span class="trial-name">TTM-1</span> trial: 33°C vs. 36°C → no difference</li>
-                            <li><span class="trial-name">TTM-2</span> trial: 33°C vs. normothermia (avoid fever) → no difference</li>
+                            <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/24237006/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">TTM-1</a></span> trial: 33°C vs. 36°C → no difference</li>
+                            <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/34133859/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">TTM-2</a></span> trial: 33°C vs. normothermia (avoid fever) → no difference</li>
                             <li><strong>Recommendation:</strong> Maintain normothermia, avoid hyperthermia (&gt;37.5°C)</li>
                         </ul>
                     </div>
@@ -1532,7 +1536,7 @@ body {
                                     <li>Valproic acid 40 mg/kg IV (max 3000 mg)</li>
                                 </ul>
                             </li>
-                            <li><span class="trial-name">ESETT</span> trial: All three equally effective</li>
+                            <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/31774955/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ESETT</a></span> trial: All three equally effective</li>
                         </ul>
 
                         <p><strong>&gt;40 minutes (Refractory Status):</strong></p>
@@ -1626,7 +1630,7 @@ body {
                     </ul>
 
                     <div class="info-box">
-                        <p><span class="trial-name">STARRT-AKI</span> Trial (2020):</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/32668114/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">STARRT-AKI</a></span> Trial (2020):</p>
                         <ul>
                             <li>Accelerated (early) vs. standard (delayed) RRT initiation</li>
                             <li>No mortality benefit with early initiation</li>
@@ -1837,7 +1841,7 @@ body {
                         <li>Pros: Less respiratory depression, easier communication, less delirium</li>
                         <li>Cons: Bradycardia, hypotension, expensive</li>
                         <li>Use: Weaning sedation, extubated but agitated, ARDS</li>
-                        <li><span class="trial-name">MENDS</span>/<span class="trial-name">SEDCOM</span> trials: Reduced delirium vs. benzodiazepines</li>
+                        <li><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/17456818/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">MENDS</a></span>/<span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/19213184/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SEDCOM</a></span> trials: Reduced delirium vs. benzodiazepines</li>
                     </ul>
 
                     <p><strong>Benzodiazepines (Midazolam, Lorazepam):</strong></p>
@@ -2065,7 +2069,7 @@ body {
                         <li>Two large-bore IVs</li>
                         <li>Type and cross</li>
                         <li>Correct coagulopathy: FFP (INR &gt;2), platelets (&lt;50k)</li>
-                        <li><strong>Transfusion target:</strong> Hgb 7-9 g/dL (<span class="trial-name">TRIGGER</span> trial)</li>
+                        <li><strong>Transfusion target:</strong> Hgb 7-9 g/dL (<span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/25270275/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">TRIGGER</a></span> trial)</li>
                     </ul>
 
                     <h4>Medications</h4>
@@ -2255,7 +2259,7 @@ body {
                     <h3>Respiratory/ARDS</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">ARMA</span> (NEJM 2000) - Low tidal volume ventilation in ARDS</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/10793162/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ARMA</a></span> (NEJM 2000) - Low tidal volume ventilation in ARDS</p>
                         <ul>
                             <li>6 mL/kg IBW vs. 12 mL/kg IBW</li>
                             <li>22% relative mortality reduction</li>
@@ -2264,7 +2268,7 @@ body {
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">PROSEVA</span> (NEJM 2013) - Prone positioning in severe ARDS</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/23688302/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">PROSEVA</a></span> (NEJM 2013) - Prone positioning in severe ARDS</p>
                         <ul>
                             <li>16+ hours/day prone vs. supine</li>
                             <li>50% relative mortality reduction in PaO2/FiO2 &lt;150</li>
@@ -2272,7 +2276,7 @@ body {
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">ACURASYS</span> (NEJM 2010) - Neuromuscular blockade in early ARDS</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/20843245/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ACURASYS</a></span> (NEJM 2010) - Neuromuscular blockade in early ARDS</p>
                         <ul>
                             <li>48 hours cisatracurium vs. placebo in PaO2/FiO2 &lt;150</li>
                             <li>Improved 90-day survival (but see ROSE trial)</li>
@@ -2280,7 +2284,7 @@ body {
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">ROSE</span> (NEJM 2019) - Reevaluation of neuromuscular blockade</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/31112383/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ROSE</a></span> (NEJM 2019) - Reevaluation of neuromuscular blockade</p>
                         <ul>
                             <li>No benefit when using lighter sedation strategy</li>
                             <li>Current practice: Consider for severe ARDS with difficult oxygenation</li>
@@ -2288,7 +2292,7 @@ body {
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">FACTT</span> (NEJM 2006) - Conservative vs. liberal fluid strategy in ARDS</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/16714767/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">FACTT</a></span> (NEJM 2006) - Conservative vs. liberal fluid strategy in ARDS</p>
                         <ul>
                             <li>Conservative strategy improved ventilator-free days</li>
                             <li>No mortality difference</li>
@@ -2298,7 +2302,7 @@ body {
                     <h3>Sepsis</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">SMART</span> (NEJM 2018) - Balanced crystalloids vs. saline</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29485925/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SMART</a></span> (NEJM 2018) - Balanced crystalloids vs. saline</p>
                         <ul>
                             <li>Reduced mortality, AKI, need for RRT</li>
                             <li>Use balanced crystalloids in ICU</li>
@@ -2306,7 +2310,7 @@ body {
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">VASST</span> (NEJM 2008) - Vasopressin in septic shock</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/18184957/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">VASST</a></span> (NEJM 2008) - Vasopressin in septic shock</p>
                         <ul>
                             <li>No mortality benefit vs. norepinephrine alone</li>
                             <li>May reduce norepinephrine requirements</li>
@@ -2314,7 +2318,7 @@ body {
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">ADRENAL</span> & <span class="trial-name">APROCCHSS</span> (NEJM 2018) - Hydrocortisone in septic shock</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29347871/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">ADRENAL</a></span> & <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/29490095/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">APROCCHSS</a></span> (NEJM 2018) - Hydrocortisone in septic shock</p>
                         <ul>
                             <li>No clear 90-day mortality benefit</li>
                             <li>May reduce vasopressor duration</li>
@@ -2324,7 +2328,7 @@ body {
                     <h3>Sedation</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">MENDS</span> (JAMA 2007), <span class="trial-name">SEDCOM</span> (Lancet 2009) - Dexmedetomidine vs. benzodiazepines</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/17456818/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">MENDS</a></span> (JAMA 2007), <span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/19213184/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">SEDCOM</a></span> (Lancet 2009) - Dexmedetomidine vs. benzodiazepines</p>
                         <ul>
                             <li>Reduced delirium, more days alive without coma/delirium</li>
                             <li>Established dex as preferred agent</li>
@@ -2334,7 +2338,7 @@ body {
                     <h3>Transfusion</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">TRICC</span> (NEJM 1999) - Restrictive vs. liberal transfusion</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/9971864/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">TRICC</a></span> (NEJM 1999) - Restrictive vs. liberal transfusion</p>
                         <ul>
                             <li>Hgb 7-9 g/dL vs. 10-12 g/dL</li>
                             <li>Restrictive strategy safe, possibly superior</li>
@@ -2344,14 +2348,14 @@ body {
                     <h3>Post-Cardiac Arrest</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">TTM-1</span> (NEJM 2013) - Targeted temperature 33°C vs. 36°C</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/24237006/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">TTM-1</a></span> (NEJM 2013) - Targeted temperature 33°C vs. 36°C</p>
                         <ul>
                             <li>No difference in mortality or neurologic outcomes</li>
                         </ul>
                     </div>
 
                     <div class="info-box">
-                        <p><span class="trial-name">TTM-2</span> (NEJM 2021) - Hypothermia (33°C) vs. normothermia</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/34133859/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">TTM-2</a></span> (NEJM 2021) - Hypothermia (33°C) vs. normothermia</p>
                         <ul>
                             <li>No mortality benefit to hypothermia</li>
                             <li>Avoid hyperthermia (&gt;37.5°C)</li>
@@ -2361,7 +2365,7 @@ body {
                     <h3>Renal</h3>
                     
                     <div class="info-box">
-                        <p><span class="trial-name">STARRT-AKI</span> (NEJM 2020) - Early vs. standard RRT initiation</p>
+                        <p><span class="trial-name"><a href="https://pubmed.ncbi.nlm.nih.gov/32668114/" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:none;">STARRT-AKI</a></span> (NEJM 2020) - Early vs. standard RRT initiation</p>
                         <ul>
                             <li>No benefit to early initiation</li>
                             <li>More patients in standard group recovered without RRT</li>
@@ -3076,12 +3080,30 @@ body {
             return false;
         }
 
-        // Navigate to section and subsection
-function navigateTo(sectionId, linkElement) {
-    const section = document.getElementById(sectionId);
-    if (!section) return false;
-    
-    // Open section if collapsed
+        // Navigate to subsection (opens parent section first)
+        function navigateToSubsection(anchorId) {
+            // Find which section this anchor belongs to
+            const anchor = document.getElementById(anchorId);
+            if (!anchor) return false;
+            
+            // Find parent section
+            const section = anchor.closest('.section');
+            if (!section) return false;
+            
+            // Open section if collapsed
+            const content = section.querySelector('.section-content');
+            const header = section.querySelector('.section-header');
+            if (content && header && !content.classList.contains('active')) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+            
+            // Close TOC
+            const toc = document.querySelector('.toc');
+            const overlay = document.querySelector('.toc-overlay');
+            if (toc && toc.classList.contains('active')) {
+                toc.classList.remove('active');
+                overlay.classList.remove('active');
     const content = section.querySelector('.section-content');
     const header = section.querySelector('.section-header');
     if (content && header && !content.classList.contains('active')) {
@@ -3104,6 +3126,22 @@ function navigateTo(sectionId, linkElement) {
     
     return false;
 }
+            
+            // Close TOC first
+            const toc = document.querySelector('.toc');
+            const overlay = document.querySelector('.toc-overlay');
+            if (toc && toc.classList.contains('active')) {
+                toc.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+            
+            // Small delay to ensure TOC is closed before scrolling
+            setTimeout(() => {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+            
+            return false;
+        }
 
         // Toggle section
         function toggleSection(sectionId) {
