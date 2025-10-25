@@ -23,9 +23,10 @@
     --border-color: #e0e0e0;
     --highlight-bg: #fff3cd;
     --success-color: #27ae60;
+    --header-height: 180px;
 }
 html {
-    scroll-padding-top: 180px;
+    scroll-padding-top: var(--header-height);
 }
 
         body {
@@ -277,6 +278,7 @@ html {
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             overflow: hidden;
+            scroll-margin-top: var(--header-height);
         }
 
         .section-header {
@@ -3072,21 +3074,44 @@ html {
         }
 
         // Navigate to section and subsection
-        function navigateTo(sectionId, linkElement) {
-            // Open the section if not already open
-            const section = document.getElementById(sectionId);
-            if (!section) {
-                console.error('Section not found:', sectionId);
-                return false;
-            }
-            
-            const content = section.querySelector('.section-content');
-            const header = section.querySelector('.section-header');
-            
-            if (content && header && !content.classList.contains('active')) {
-                header.classList.add('active');
-                content.classList.add('active');
-            }
+function navigateTo(sectionId, linkElement) {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+        console.error('Section not found:', sectionId);
+        return false;
+    }
+    
+    // Open the section if not already open
+    const content = section.querySelector('.section-content');
+    const header = section.querySelector('.section-header');
+    
+    if (content && header && !content.classList.contains('active')) {
+        header.classList.add('active');
+        content.classList.add('active');
+    }
+    
+    // Close TOC first
+    const toc = document.querySelector('.toc');
+    const overlay = document.querySelector('.toc-overlay');
+    if (toc && toc.classList.contains('active')) {
+        toc.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+    
+    // Calculate scroll position with header offset
+    setTimeout(() => {
+        const headerHeight = 180;
+        const elementPosition = section.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    }, 100);
+    
+    return false;
+}
             
             // Close TOC first
             const toc = document.querySelector('.toc');
