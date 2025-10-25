@@ -444,6 +444,161 @@
             transform: scale(0.95);
         }
 
+        /* Glossary Modal */
+        .glossary-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(2px);
+        }
+
+        .glossary-modal.active {
+            display: flex;
+        }
+
+        .glossary-content {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glossary-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--bg-color);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.3em;
+            cursor: pointer;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .glossary-close:active {
+            background: #ddd;
+            transform: scale(0.95);
+        }
+
+        .glossary-term-title {
+            font-size: 1.4em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+            padding-right: 40px;
+        }
+
+        .glossary-term-def {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .glossary-term-category {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Clickable glossary terms in text */
+        .gterm {
+            color: var(--secondary-color);
+            cursor: pointer;
+            border-bottom: 1px dotted var(--secondary-color);
+            position: relative;
+            font-weight: 500;
+        }
+
+        .gterm:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Glossary section styles */
+        .glossary-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .glossary-item {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .glossary-item:active {
+            transform: scale(0.98);
+            background: #e9ecef;
+        }
+
+        .glossary-item-term {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.05em;
+            margin-bottom: 5px;
+        }
+
+        .glossary-item-def {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .glossary-search-box {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            transition: border-color 0.2s ease;
+        }
+
+        .glossary-search-box:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
         @media (min-width: 768px) {
             .container {
                 padding: 30px;
@@ -451,6 +606,10 @@
             
             .section-inner {
                 padding: 30px;
+            }
+
+            .glossary-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -496,7 +655,7 @@
                     <div class="quick-ref-btn" onclick="navigateTo('sepsis', this)">Sepsis Bundle</div>
                     <div class="quick-ref-btn" onclick="navigateTo('renal', this)">Acid-Base</div>
                     <div class="quick-ref-btn" onclick="navigateTo('procedures', this)">RSI Drugs</div>
-                    <div class="quick-ref-btn" onclick="navigateTo('daily', this)">Daily Rounds</div>
+                    <div class="quick-ref-btn" onclick="navigateTo('glossary', this)">📖 Glossary</div>
                 </div>
             </div>
 
@@ -659,8 +818,23 @@
                     <a href="#study-tips" onclick="navigateTo('study', this)">Final Tips for Success</a>
                 </div>
             </div>
+
+            <div class="toc-item">
+                <div class="toc-main" onclick="navigateTo('glossary', this); event.stopPropagation();">
+                    <span>📖 Glossary & Abbreviations</span>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <div class="glossary-modal" onclick="closeGlossaryIfOutside(event)">
+        <div class="glossary-content">
+            <button class="glossary-close" onclick="closeGlossary()">✕</button>
+            <span class="glossary-term-category" id="glossary-category"></span>
+            <h3 class="glossary-term-title" id="glossary-title"></h3>
+            <p class="glossary-term-def" id="glossary-definition"></p>
+        </div>
+    </div>
 
     <div class="container">
 
@@ -742,9 +916,9 @@
                         <li><strong>Timing:</strong> Within 1 week of known insult</li>
                         <li><strong>Imaging:</strong> Bilateral opacities not explained by effusions/nodules</li>
                         <li><strong>Origin:</strong> Not fully explained by cardiac failure or fluid overload</li>
-                        <li><strong>Oxygenation</strong> (on PEEP ≥5):
+                        <li><strong>Oxygenation</strong> (on <span class="gterm" onclick="showGlossary('PEEP')">PEEP</span> ≥5):
                             <ul>
-                                <li>Mild: PaO2/FiO2 200-300</li>
+                                <li>Mild: PaO2/<span class="gterm" onclick="showGlossary('FiO2')">FiO2</span> 200-300</li>
                                 <li>Moderate: PaO2/FiO2 100-200</li>
                                 <li>Severe: PaO2/FiO2 &lt;100</li>
                             </ul>
@@ -756,8 +930,8 @@
                         <ol>
                             <li><strong>Lung-protective ventilation</strong> <span class="trial-name">ARMA</span>
                                 <ul>
-                                    <li>Tidal volume: 6 mL/kg IBW</li>
-                                    <li>Plateau pressure: &lt;30 cm H2O</li>
+                                    <li>Tidal volume: 6 mL/kg <span class="gterm" onclick="showGlossary('IBW')">IBW</span></li>
+                                    <li><span class="gterm" onclick="showGlossary('Pplat')">Plateau pressure</span>: &lt;30 cm H2O</li>
                                 </ul>
                             </li>
                             <li><strong>Higher PEEP</strong> <span class="trial-name">ALVEOLI</span> <span class="trial-name">LOVS</span>
@@ -907,8 +1081,8 @@
                     
                     <h4>Laboratory Markers</h4>
                     <ul>
-                        <li><strong>Lactate:</strong> &gt;2 suggests tissue hypoperfusion (but many causes)</li>
-                        <li><strong>ScvO2</strong> (central venous O2 saturation):
+                        <li><strong><span class="gterm" onclick="showGlossary('Lactate')">Lactate</span>:</strong> &gt;2 suggests tissue hypoperfusion (but many causes)</li>
+                        <li><strong><span class="gterm" onclick="showGlossary('ScvO2')">ScvO2</span></strong> (central venous O2 saturation):
                             <ul>
                                 <li>Normal 70-75%</li>
                                 <li>&lt;70% suggests inadequate O2 delivery</li>
@@ -918,7 +1092,7 @@
                     </ul>
 
                     <div class="info-box">
-                        <h4>Central Venous Pressure (CVP)</h4>
+                        <h4>Central Venous Pressure (<span class="gterm" onclick="showGlossary('CVP')">CVP</span>)</h4>
                         <ul>
                             <li>Not reliable for predicting fluid responsiveness</li>
                             <li>CVP &lt;8 suggests hypovolemia (but poor sensitivity)</li>
@@ -1021,15 +1195,15 @@
                     <h3>Definitions (Sepsis-3)</h3>
                     
                     <div class="critical-box">
-                        <p><strong>Sepsis:</strong> Life-threatening organ dysfunction due to dysregulated host response to infection</p>
+                        <p><strong><span class="gterm" onclick="showGlossary('Sepsis')">Sepsis</span>:</strong> Life-threatening organ dysfunction due to dysregulated host response to infection</p>
                         <ul>
-                            <li><strong>Organ dysfunction:</strong> SOFA score increase ≥2 points</li>
+                            <li><strong>Organ dysfunction:</strong> <span class="gterm" onclick="showGlossary('SOFA')">SOFA</span> score increase ≥2 points</li>
                         </ul>
                         
-                        <p><strong>Septic Shock:</strong> Sepsis + persistent hypotension requiring vasopressors (MAP ≥65) + lactate &gt;2 mmol/L despite adequate fluid resuscitation</p>
+                        <p><strong>Septic Shock:</strong> Sepsis + persistent hypotension requiring vasopressors (<span class="gterm" onclick="showGlossary('MAP')">MAP</span> ≥65) + lactate &gt;2 mmol/L despite adequate fluid resuscitation</p>
                     </div>
 
-                    <h4>qSOFA (Quick SOFA - screening tool, NOT diagnostic)</h4>
+                    <h4><span class="gterm" onclick="showGlossary('qSOFA')">qSOFA</span> (Quick SOFA - screening tool, NOT diagnostic)</h4>
                     <ul>
                         <li>RR ≥22</li>
                         <li>Altered mentation</li>
@@ -1193,7 +1367,7 @@
 
                     <h3>Delirium</h3>
                     
-                    <h4>CAM-ICU (Confusion Assessment Method for ICU)</h4>
+                    <h4><span class="gterm" onclick="showGlossary('CAM-ICU')">CAM-ICU</span> (Confusion Assessment Method for ICU)</h4>
                     <ul>
                         <li>Feature 1: Acute change or fluctuating course</li>
                         <li>Feature 2: Inattention</li>
@@ -1232,7 +1406,7 @@
                     <h3>Post-Cardiac Arrest Care</h3>
                     
                     <div class="info-box">
-                        <h4>Targeted Temperature Management (TTM)</h4>
+                        <h4>Targeted Temperature Management (<span class="gterm" onclick="showGlossary('TTM')">TTM</span>)</h4>
                         <ul>
                             <li><strong>Target:</strong> 32-36°C for at least 24 hours</li>
                             <li><span class="trial-name">TTM-1</span> trial: 33°C vs. 36°C → no difference</li>
@@ -1366,9 +1540,9 @@
             </div>
             <div class="section-content">
                 <div class="section-inner">
-                    <h3>Acute Kidney Injury (AKI)</h3>
+                    <h3>Acute Kidney Injury (<span class="gterm" onclick="showGlossary('AKI')">AKI</span>)</h3>
                     
-                    <h4>KDIGO Criteria (any of the following)</h4>
+                    <h4><span class="gterm" onclick="showGlossary('KDIGO')">KDIGO</span> Criteria (any of the following)</h4>
                     <ul>
                         <li>SCr increase ≥0.3 mg/dL within 48 hours OR</li>
                         <li>SCr increase ≥1.5x baseline within 7 days OR</li>
@@ -1379,20 +1553,20 @@
                     <ul>
                         <li><strong>Stage 1:</strong> SCr 1.5-1.9x baseline or ↑≥0.3 mg/dL; UOP &lt;0.5 mL/kg/hr × 6-12 hr</li>
                         <li><strong>Stage 2:</strong> SCr 2.0-2.9x baseline; UOP &lt;0.5 mL/kg/hr × ≥12 hr</li>
-                        <li><strong>Stage 3:</strong> SCr ≥3x baseline or ≥4 mg/dL or initiation of RRT; UOP &lt;0.3 mL/kg/hr × ≥24 hr or anuria × 12 hr</li>
+                        <li><strong>Stage 3:</strong> SCr ≥3x baseline or ≥4 mg/dL or initiation of <span class="gterm" onclick="showGlossary('RRT')">RRT</span>; UOP &lt;0.3 mL/kg/hr × ≥24 hr or anuria × 12 hr</li>
                     </ul>
 
                     <h4>Etiology</h4>
                     <ul>
                         <li><strong>Prerenal:</strong> Hypovolemia, hypotension, reduced effective arterial volume</li>
-                        <li><strong>Intrinsic:</strong> ATN (ischemic/nephrotoxic), AIN, glomerulonephritis, vascular</li>
+                        <li><strong>Intrinsic:</strong> <span class="gterm" onclick="showGlossary('ATN')">ATN</span> (ischemic/nephrotoxic), AIN, glomerulonephritis, vascular</li>
                         <li><strong>Postrenal:</strong> Obstruction</li>
                     </ul>
 
                     <h4>Workup</h4>
                     <ul>
                         <li><strong>Urinalysis:</strong> WBCs, RBCs, casts, protein</li>
-                        <li><strong>Urine electrolytes:</strong> FENa, FEUrea
+                        <li><strong>Urine electrolytes:</strong> <span class="gterm" onclick="showGlossary('FENa')">FENa</span>, FEUrea
                             <ul>
                                 <li>FENa &lt;1% suggests prerenal (if not on diuretics)</li>
                                 <li>FENa &gt;2% suggests ATN</li>
@@ -1611,7 +1785,7 @@
                     <h3>Sedation</h3>
                     
                     <div class="highlight-box">
-                        <h4>RASS Scale (Richmond Agitation-Sedation Scale)</h4>
+                        <h4><span class="gterm" onclick="showGlossary('RASS')">RASS</span> Scale (Richmond Agitation-Sedation Scale)</h4>
                         <ul>
                             <li>+4: Combative</li>
                             <li>+3: Very agitated</li>
@@ -1634,7 +1808,7 @@
                         <li>Dose: 5-50 mcg/kg/min</li>
                         <li>Pros: Rapid on/off, short context-sensitive half-life</li>
                         <li>Cons: Hypotension, propofol infusion syndrome, hypertriglyceridemia</li>
-                        <li>Use: Short-term sedation, neuro patients (lowers ICP)</li>
+                        <li>Use: Short-term sedation, neuro patients (lowers <span class="gterm" onclick="showGlossary('ICP')">ICP</span>)</li>
                     </ul>
 
                     <p><strong>Dexmedetomidine:</strong></p>
@@ -1764,7 +1938,7 @@
                     <h3>Endotracheal Intubation</h3>
                     
                     <div class="critical-box">
-                        <h4>Rapid Sequence Intubation (RSI)</h4>
+                        <h4>Rapid Sequence Intubation (<span class="gterm" onclick="showGlossary('RSI')">RSI</span>)</h4>
                         
                         <p><strong>Pre-oxygenation:</strong></p>
                         <ul>
@@ -1997,7 +2171,7 @@
 
                     <h3>Catheter-Associated Infections</h3>
                     
-                    <h4>CLABSI Prevention</h4>
+                    <h4><span class="gterm" onclick="showGlossary('CLABSI')">CLABSI</span> Prevention</h4>
                     <ul>
                         <li>Maximal sterile barriers during insertion</li>
                         <li>Chlorhexidine skin prep</li>
@@ -2006,7 +2180,7 @@
                         <li>Dressing changes per protocol</li>
                     </ul>
 
-                    <h4>CAUTI Prevention</h4>
+                    <h4><span class="gterm" onclick="showGlossary('CAUTI')">CAUTI</span> Prevention</h4>
                     <ul>
                         <li><strong>Remove Foley ASAP</strong> (most important)</li>
                         <li>Use only when necessary</li>
@@ -2429,6 +2603,25 @@
 
     </div>
 
+    <!-- GLOSSARY -->
+    <section class="section" id="glossary">
+        <div class="section-header" onclick="toggleSection('glossary')">
+            <h2>📖 Glossary & Abbreviations</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            <div class="section-inner">
+                <p style="margin-bottom: 20px;">Quick reference for common critical care terms and abbreviations. Click any term for detailed definition. Throughout the guide, <span class="gterm" onclick="showGlossary('example')">underlined blue terms</span> are clickable for instant definitions.</p>
+                
+                <input type="text" class="glossary-search-box" placeholder="🔍 Search glossary..." oninput="filterGlossary(this.value)">
+                
+                <div class="glossary-grid" id="glossary-list">
+                    <!-- Glossary items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="footer">
         <p>Critical Care Medicine Study Guide | Internal Medicine Residency</p>
         <p style="margin-top: 10px; font-size: 0.85em;">Evidence-based references: UpToDate, NEJM, JAMA, Surviving Sepsis Campaign, PAD Guidelines, KDIGO</p>
@@ -2437,6 +2630,350 @@
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
 
     <script>
+        // Glossary Database
+        const glossary = {
+            // Respiratory Terms
+            'ARDS': {
+                term: 'ARDS',
+                full: 'Acute Respiratory Distress Syndrome',
+                definition: 'Life-threatening lung condition characterized by widespread inflammation causing fluid to leak into the lungs. Defined by bilateral opacities on imaging, PaO2/FiO2 ratio <300, and not fully explained by cardiac failure. Requires lung-protective ventilation (6 mL/kg IBW).',
+                category: 'Respiratory'
+            },
+            'PEEP': {
+                term: 'PEEP',
+                full: 'Positive End-Expiratory Pressure',
+                definition: 'Pressure in the airways above atmospheric pressure at the end of expiration. Prevents alveolar collapse, improves oxygenation, and reduces atelectasis. Typical starting value is 5 cm H2O, titrated higher in ARDS.',
+                category: 'Respiratory'
+            },
+            'FiO2': {
+                term: 'FiO2',
+                full: 'Fraction of Inspired Oxygen',
+                definition: 'Concentration of oxygen in the gas mixture being delivered to the patient, expressed as a decimal (0.21-1.0) or percentage (21%-100%). Room air is 21% (0.21).',
+                category: 'Respiratory'
+            },
+            'Pplat': {
+                term: 'Plateau Pressure',
+                full: 'Plateau Pressure',
+                definition: 'Pressure in the airways during an inspiratory hold maneuver, reflecting alveolar pressure. Should be kept <30 cm H2O in ARDS to prevent barotrauma. Measured by performing an end-inspiratory pause.',
+                category: 'Respiratory'
+            },
+            'IBW': {
+                term: 'IBW',
+                full: 'Ideal Body Weight',
+                definition: 'Calculated weight used for determining appropriate tidal volumes in mechanical ventilation. Males: 50 kg + 2.3 kg per inch over 5 feet. Females: 45.5 kg + 2.3 kg per inch over 5 feet.',
+                category: 'Respiratory'
+            },
+            'SBT': {
+                term: 'SBT',
+                full: 'Spontaneous Breathing Trial',
+                definition: 'Test to assess readiness for extubation by having patient breathe on minimal support (T-piece or pressure support 5-7) for 30-120 minutes. Success indicates patient can likely be extubated.',
+                category: 'Respiratory'
+            },
+            'NIV': {
+                term: 'NIV',
+                full: 'Non-Invasive Ventilation',
+                definition: 'Mechanical ventilation delivered via face mask rather than endotracheal tube. Strong indications include COPD exacerbations with respiratory acidosis, cardiogenic pulmonary edema, and immunocompromised patients with respiratory failure.',
+                category: 'Respiratory'
+            },
+            'VAP': {
+                term: 'VAP',
+                full: 'Ventilator-Associated Pneumonia',
+                definition: 'Pneumonia developing >48 hours after intubation. Prevention includes head of bed elevation, oral care with chlorhexidine, daily sedation interruption, and spontaneous breathing trials.',
+                category: 'Respiratory'
+            },
+            'HFNC': {
+                term: 'HFNC',
+                full: 'High-Flow Nasal Cannula',
+                definition: 'Oxygen delivery system providing heated, humidified oxygen at flow rates up to 60 L/min. Generates low-level PEEP (3-5 cm H2O) and has been shown to reduce intubation rates in hypoxemic respiratory failure.',
+                category: 'Respiratory'
+            },
+            
+            // Hemodynamic Terms
+            'MAP': {
+                term: 'MAP',
+                full: 'Mean Arterial Pressure',
+                definition: 'Average arterial pressure during a single cardiac cycle. Calculated as DBP + 1/3(SBP-DBP). Target is typically ≥65 mmHg in septic shock, though may be individualized based on chronic hypertension.',
+                category: 'Hemodynamics'
+            },
+            'CVP': {
+                term: 'CVP',
+                full: 'Central Venous Pressure',
+                definition: 'Pressure in the vena cava near the right atrium, measured via central line. Not reliable for predicting fluid responsiveness. Normal range 2-8 mmHg. Trends more useful than absolute values.',
+                category: 'Hemodynamics'
+            },
+            'ScvO2': {
+                term: 'ScvO2',
+                full: 'Central Venous Oxygen Saturation',
+                definition: 'Oxygen saturation of blood in the superior vena cava. Normal 70-75%. Values <70% suggest inadequate oxygen delivery or increased consumption. Values >75% in sepsis may indicate impaired oxygen extraction.',
+                category: 'Hemodynamics'
+            },
+            'SVR': {
+                term: 'SVR',
+                full: 'Systemic Vascular Resistance',
+                definition: 'Resistance to blood flow offered by systemic vasculature. Decreased in distributive shock (sepsis, anaphylaxis), increased in cardiogenic and hypovolemic shock. Treated with vasopressors when low.',
+                category: 'Hemodynamics'
+            },
+            'CO': {
+                term: 'CO',
+                full: 'Cardiac Output',
+                definition: 'Volume of blood pumped by the heart per minute. Normal is 4-8 L/min. Cardiac output = heart rate × stroke volume. Decreased in cardiogenic shock, often increased in early septic shock.',
+                category: 'Hemodynamics'
+            },
+            'PPV': {
+                term: 'PPV',
+                full: 'Pulse Pressure Variation',
+                definition: 'Variation in pulse pressure during the respiratory cycle in mechanically ventilated patients. PPV >13% suggests fluid responsiveness. Requires normal sinus rhythm and no spontaneous breathing.',
+                category: 'Hemodynamics'
+            },
+            
+            // Shock & Vasopressors
+            'Sepsis': {
+                term: 'Sepsis',
+                full: 'Sepsis',
+                definition: 'Life-threatening organ dysfunction caused by dysregulated host response to infection. Defined as suspected infection plus increase in SOFA score ≥2 points. Requires early recognition and 1-hour bundle implementation.',
+                category: 'Shock'
+            },
+            'qSOFA': {
+                term: 'qSOFA',
+                full: 'Quick Sequential Organ Failure Assessment',
+                definition: 'Bedside screening tool for sepsis: RR ≥22, altered mentation, SBP ≤100. Score ≥2 indicates higher risk of poor outcomes. NOT diagnostic of sepsis, but useful for early identification.',
+                category: 'Shock'
+            },
+            'SOFA': {
+                term: 'SOFA',
+                full: 'Sequential Organ Failure Assessment',
+                definition: 'Scoring system assessing dysfunction in 6 organ systems: respiratory, coagulation, liver, cardiovascular, CNS, and renal. Sepsis is defined as increase ≥2 points from baseline.',
+                category: 'Shock'
+            },
+            
+            // Renal Terms
+            'AKI': {
+                term: 'AKI',
+                full: 'Acute Kidney Injury',
+                definition: 'Sudden decrease in kidney function defined by KDIGO criteria: SCr increase ≥0.3 mg/dL within 48 hours, or ≥1.5× baseline within 7 days, or UOP <0.5 mL/kg/hr for 6 hours.',
+                category: 'Renal'
+            },
+            'KDIGO': {
+                term: 'KDIGO',
+                full: 'Kidney Disease: Improving Global Outcomes',
+                definition: 'International organization that developed widely-used criteria for diagnosing and staging AKI. Stages 1-3 based on serum creatinine and urine output changes.',
+                category: 'Renal'
+            },
+            'RRT': {
+                term: 'RRT',
+                full: 'Renal Replacement Therapy',
+                definition: 'Dialysis or filtration used when kidneys cannot adequately clear waste. Indications (AEIOU): Acidosis, Electrolytes, Intoxication, Overload, Uremia. Modalities include intermittent HD and continuous CRRT.',
+                category: 'Renal'
+            },
+            'CRRT': {
+                term: 'CRRT',
+                full: 'Continuous Renal Replacement Therapy',
+                definition: 'Form of dialysis running 24 hours continuously. Advantages include hemodynamic stability and gradual fluid removal. Preferred in hemodynamically unstable patients and those with elevated ICP.',
+                category: 'Renal'
+            },
+            'ATN': {
+                term: 'ATN',
+                full: 'Acute Tubular Necrosis',
+                definition: 'Most common cause of intrinsic AKI, resulting from ischemic or nephrotoxic injury to renal tubules. Characterized by muddy brown casts on urinalysis and FENa >2%.',
+                category: 'Renal'
+            },
+            'FENa': {
+                term: 'FENa',
+                full: 'Fractional Excretion of Sodium',
+                definition: 'Percentage of filtered sodium excreted in urine. <1% suggests prerenal AKI, >2% suggests ATN. Formula: (UNa × PCr) / (PNa × UCr) × 100. Less useful if patient on diuretics.',
+                category: 'Renal'
+            },
+            
+            // Neuro Terms
+            'ICP': {
+                term: 'ICP',
+                full: 'Intracranial Pressure',
+                definition: 'Pressure inside the skull. Normal 5-15 mmHg, treat when >20-22 mmHg. Elevated ICP can cause brain herniation. Managed with head of bed elevation, sedation, osmotic therapy, and possibly decompressive craniectomy.',
+                category: 'Neurological'
+            },
+            'CPP': {
+                term: 'CPP',
+                full: 'Cerebral Perfusion Pressure',
+                definition: 'Pressure gradient driving blood flow to the brain. CPP = MAP - ICP. Target CPP >60 mmHg to maintain adequate cerebral perfusion. Requires balancing MAP support with ICP reduction.',
+                category: 'Neurological'
+            },
+            'GCS': {
+                term: 'GCS',
+                full: 'Glasgow Coma Scale',
+                definition: 'Neurological scale assessing level of consciousness. Scored 3-15 based on eye opening (1-4), verbal response (1-5), and motor response (1-6). Score ≤8 typically indicates need for airway protection.',
+                category: 'Neurological'
+            },
+            'CAM-ICU': {
+                term: 'CAM-ICU',
+                full: 'Confusion Assessment Method for ICU',
+                definition: 'Validated tool for diagnosing delirium in ICU patients. Positive if: acute change/fluctuation + inattention + (altered consciousness OR disorganized thinking). Should be assessed at least daily.',
+                category: 'Neurological'
+            },
+            'TTM': {
+                term: 'TTM',
+                full: 'Targeted Temperature Management',
+                definition: 'Temperature control strategy after cardiac arrest. Current evidence supports maintaining normothermia and avoiding hyperthermia (>37.5°C) rather than routine hypothermia to 33°C.',
+                category: 'Neurological'
+            },
+            
+            // Sedation Terms
+            'RASS': {
+                term: 'RASS',
+                full: 'Richmond Agitation-Sedation Scale',
+                definition: 'Scale from +4 (combative) to -5 (unarousable) assessing sedation level. Target typically 0 to -2 (alert/calm to light sedation) for most ICU patients to minimize delirium and facilitate early liberation.',
+                category: 'Sedation'
+            },
+            'PAD': {
+                term: 'PAD Guidelines',
+                full: 'Pain, Agitation, and Delirium Guidelines',
+                definition: 'SCCM clinical practice guidelines for managing pain, agitation, and delirium in ICU. Emphasizes analgesia-first approach, light sedation, delirium prevention, and early mobilization (ABCDEF bundle).',
+                category: 'Sedation'
+            },
+            'SAT': {
+                term: 'SAT',
+                full: 'Spontaneous Awakening Trial',
+                definition: 'Daily interruption of sedation to allow patient to awaken. Helps assess neurological status, readiness for extubation, and reduces total sedation exposure. Resume at half dose if needed.',
+                category: 'Sedation'
+            },
+            
+            // Procedures
+            'RSI': {
+                term: 'RSI',
+                full: 'Rapid Sequence Intubation',
+                definition: 'Technique for emergent intubation involving pre-oxygenation, induction agent (etomidate, ketamine, propofol), neuromuscular blockade (succinylcholine or rocuronium), and immediate intubation without bag-mask ventilation.',
+                category: 'Procedures'
+            },
+            'CVC': {
+                term: 'CVC',
+                full: 'Central Venous Catheter',
+                definition: 'Large-bore catheter inserted into internal jugular, subclavian, or femoral vein. Used for vasopressor administration, monitoring, hemodialysis, or when peripheral access inadequate. Requires sterile technique and ultrasound guidance.',
+                category: 'Procedures'
+            },
+            
+            // Trials & Guidelines
+            'ARMA': {
+                term: 'ARMA Trial',
+                full: 'ARDSNet Low Tidal Volume Trial',
+                definition: 'Landmark 2000 NEJM trial showing 22% mortality reduction with lung-protective ventilation (6 mL/kg IBW vs 12 mL/kg) in ARDS. Established standard of care for ARDS ventilation.',
+                category: 'Trials'
+            },
+            'PROSEVA': {
+                term: 'PROSEVA Trial',
+                full: 'Prone Positioning in Severe ARDS',
+                definition: '2013 NEJM trial demonstrating 50% mortality reduction with prone positioning (16+ hours/day) in severe ARDS (PaO2/FiO2 <150). One of the most impactful interventions in ARDS.',
+                category: 'Trials'
+            },
+            'SMART': {
+                term: 'SMART Trial',
+                full: 'Saline vs. Balanced Crystalloids',
+                definition: '2018 NEJM trial showing balanced crystalloids (lactated Ringer\'s, Plasmalyte) reduced mortality and AKI compared to normal saline in critically ill patients. Changed practice to favor balanced solutions.',
+                category: 'Trials'
+            },
+            
+            // Other Important Terms
+            'Lactate': {
+                term: 'Lactate',
+                full: 'Serum Lactate',
+                definition: 'Marker of tissue hypoperfusion and cellular hypoxia. Elevated (>2 mmol/L) in shock states. Target ≥10% clearance in first 2 hours of sepsis resuscitation. Normal <2 mmol/L.',
+                category: 'Labs'
+            },
+            'CLABSI': {
+                term: 'CLABSI',
+                full: 'Central Line-Associated Bloodstream Infection',
+                definition: 'Bloodstream infection in patient with central line where no other source is identified. Prevention includes maximal sterile barriers, chlorhexidine prep, avoiding femoral site, and daily line necessity assessment.',
+                category: 'Infection'
+            },
+            'CAUTI': {
+                term: 'CAUTI',
+                full: 'Catheter-Associated Urinary Tract Infection',
+                definition: 'UTI in patient with indwelling urinary catheter. Most important prevention strategy is removing Foley catheter as soon as no longer necessary. Use only when truly indicated.',
+                category: 'Infection'
+            },
+            'ABG': {
+                term: 'ABG',
+                full: 'Arterial Blood Gas',
+                definition: 'Blood test measuring pH, PaO2, PaCO2, and HCO3 to assess oxygenation, ventilation, and acid-base status. Essential for managing respiratory failure and metabolic derangements in critically ill patients.',
+                category: 'Labs'
+            },
+            'DKA': {
+                term: 'DKA',
+                full: 'Diabetic Ketoacidosis',
+                definition: 'Hyperglycemic crisis with high anion gap metabolic acidosis and ketones. Triad: hyperglycemia (>250), acidosis (pH <7.3), and ketones. Treated with insulin, fluids, and potassium repletion.',
+                category: 'Endocrine'
+            },
+            'example': {
+                term: 'Example Term',
+                full: 'This is an Example',
+                definition: 'This is what a clickable glossary term looks like! Throughout the guide, you\'ll see medical terms and abbreviations highlighted in blue with a dotted underline. Simply tap them to see their definition without losing your place.',
+                category: 'Demo'
+            }
+        };
+
+        // Show glossary term definition
+        function showGlossary(term) {
+            const entry = glossary[term];
+            if (!entry) return;
+            
+            document.getElementById('glossary-category').textContent = entry.category;
+            document.getElementById('glossary-title').textContent = entry.full || entry.term;
+            document.getElementById('glossary-definition').textContent = entry.definition;
+            
+            const modal = document.querySelector('.glossary-modal');
+            modal.classList.add('active');
+            
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close glossary modal
+        function closeGlossary() {
+            const modal = document.querySelector('.glossary-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close if clicking outside content
+        function closeGlossaryIfOutside(event) {
+            if (event.target.classList.contains('glossary-modal')) {
+                closeGlossary();
+            }
+        }
+
+        // Populate glossary list
+        function populateGlossary() {
+            const glossaryList = document.getElementById('glossary-list');
+            const sortedTerms = Object.keys(glossary).sort();
+            
+            sortedTerms.forEach(key => {
+                const entry = glossary[key];
+                const item = document.createElement('div');
+                item.className = 'glossary-item';
+                item.onclick = () => showGlossary(key);
+                
+                const shortDef = entry.definition.length > 120 
+                    ? entry.definition.substring(0, 120) + '...' 
+                    : entry.definition;
+                
+                item.innerHTML = `
+                    <div class="glossary-item-term">${entry.term}${entry.full && entry.full !== entry.term ? ' - ' + entry.full : ''}</div>
+                    <div class="glossary-item-def">${shortDef}</div>
+                `;
+                
+                glossaryList.appendChild(item);
+            });
+        }
+
+        // Filter glossary
+        function filterGlossary(query) {
+            const items = document.querySelectorAll('.glossary-item');
+            const searchLower = query.toLowerCase();
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchLower) ? 'block' : 'none';
+            });
+        }
+
         // Toggle table of contents
         function toggleToc() {
             const toc = document.querySelector('.toc');
@@ -2569,6 +3106,16 @@
             }
         });
 
+        // Keyboard support for glossary modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.querySelector('.glossary-modal');
+                if (modal.classList.contains('active')) {
+                    closeGlossary();
+                }
+            }
+        });
+
         // Open first section by default
         window.addEventListener('load', function() {
             const firstSection = document.querySelector('.section');
@@ -2578,6 +3125,9 @@
                 content.classList.add('active');
                 header.classList.add('active');
             }
+            
+            // Populate glossary
+            populateGlossary();
         });
     </script>
 </body>
